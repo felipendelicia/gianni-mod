@@ -1,14 +1,20 @@
-# Checklist manual — Leones v0.1.0
+# Checklist manual — Leones v0.2.0
 
-Mundo creativo, plano o sabana. `./gradlew runClient`.
+Mundo creativo, sabana. `./gradlew runClient`.
 
-- [ ] Huevo "Huevo generador de león" en pestaña de huevos, con textura.
-- [ ] Spawn natural: leones en sabana, grupos 2–4, mezcla de variantes.
-- [ ] Día: leones salvajes echados, no atacan si no los provocás.
-- [ ] Noche (`/time set night`): león salvaje te ataca de cerca; caza vacas/ovejas/cerdos/gallinas/conejos.
-- [ ] Domesticar adulto: solo de día mientras descansa, carne cruda, ~3 intentos, corazones.
-- [ ] Domesticar cachorro: a cualquier hora.
-- [ ] Domesticado: sigue, se sienta con click mano vacía, defiende al dueño, se cura con carne.
-- [ ] Montura: click con saddle la equipa (visible), mano vacía monta, WASD + espacio (salto), shift desmonta, al morir dropea la montura.
-- [ ] Cría: dos domesticados + carne → cachorro; variante heredada; blanco ~5%.
-- [ ] Persistencia: salir y volver a entrar al mundo conserva variante, tame y montura.
+## Regresión v0.1.0
+- [ ] Domesticar (día+descanso+carne), sentar, seguir, defender.
+- [ ] Ensillar, montar (WASD+espacio), desmontar, drop de saddle al morir.
+- [ ] Cría con herencia de variante; persistencia al salir/entrar.
+
+## Nuevo en v0.2.0
+- [ ] Sonidos: gruñido ambiente más grave; rugido notorio al anochecer (solo machos).
+- [ ] Rugido en combate: vacas/ovejas cercanas huyen del macho.
+- [ ] Acecho: león salvaje con presa lejos se agacha antes de correr.
+- [ ] Cola: se balancea sola; cachorros: dos cachorros juntos se persiguen y saltan.
+- [ ] Descanso: cabeza apoyada al echarse de día.
+- [ ] Matar león salvaje: dropea pelaje + carne; a veces colmillo. Blanco dropea pelaje blanco.
+- [ ] Craft: 2 pelajes → 3 alfombras (color según pelaje); colocarlas y romperlas.
+- [ ] Craft collar (2 hilos + 3 colmillos) → equiparlo al león propio → se ve en el cuello → montado va más rápido → drop al morir.
+- [ ] Advancements: pestaña con "Sabana" y el árbol; "Copo de nieve" al domesticar un blanco.
+- [ ] Guarida: explorar sabana (elytra/creative) hasta encontrar la roca con huesos y manada.

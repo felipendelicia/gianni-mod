@@ -7,6 +7,11 @@ Leones para Minecraft Java 26.2 (NeoForge).
 - Domesticables con carne cruda (cachorros siempre; adultos solo descansando de día).
 - Montables con saddle (WASD + espacio para saltar).
 - Criables: la variante se hereda; 5% de león blanco.
+- Rugido del macho al anochecer y al cazar (las presas huyen).
+- Cachorros que juegan; acecho agachado antes de atacar.
+- Loot: pelajes (dorado/blanco), colmillos, carne. Alfombras y collar craftables.
+- Collar de colmillos: +30% de velocidad montado.
+- Advancements propios y guaridas de leones en las sabanas.
 
 ## Desarrollo
 
