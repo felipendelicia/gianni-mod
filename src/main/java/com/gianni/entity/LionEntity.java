@@ -258,6 +258,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             stack.consume(1, player);
             if (!this.level().isClientSide()) {
                 this.applyCatnip();
+                if (player instanceof ServerPlayer sp) ModCriteria.LION_TRIPPED.get().trigger(sp);
             }
             return InteractionResult.SUCCESS;
         }
@@ -265,6 +266,9 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             stack.consume(1, player);
             if (!this.level().isClientSide()) {
                 this.applyDoping();
+                if (this.hasPassenger(player) && player instanceof ServerPlayer sp) {
+                    ModCriteria.LION_DOPED_MOUNTED.get().trigger(sp);
+                }
             }
             return InteractionResult.SUCCESS;
         }

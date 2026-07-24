@@ -1,0 +1,12 @@
+{
+  "parent": "gianni:lions/ride",
+  "display": {
+    "icon": { "id": "gianni:yuyo_dopante" },
+    "title": { "translate": "advancement.gianni.doping.title" },
+    "description": { "translate": "advancement.gianni.doping.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": { "doped": { "trigger": "gianni:lion_doped_mounted" } }
+}

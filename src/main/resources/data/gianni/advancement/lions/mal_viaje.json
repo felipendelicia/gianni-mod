@@ -1,0 +1,12 @@
+{
+  "parent": "gianni:lions/root",
+  "display": {
+    "icon": { "id": "gianni:yuyo_gatero" },
+    "title": { "translate": "advancement.gianni.mal_viaje.title" },
+    "description": { "translate": "advancement.gianni.mal_viaje.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": { "tripped": { "trigger": "gianni:lion_tripped" } }
+}

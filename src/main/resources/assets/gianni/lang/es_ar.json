@@ -26,5 +26,9 @@
   "advancement.gianni.white.title": "Copo de nieve",
   "advancement.gianni.white.desc": "Domesticá un león blanco",
   "advancement.gianni.collar.title": "Rey de la sabana",
-  "advancement.gianni.collar.desc": "Craftea un collar de colmillos"
+  "advancement.gianni.collar.desc": "Craftea un collar de colmillos",
+  "advancement.gianni.mal_viaje.title": "Mal viaje",
+  "advancement.gianni.mal_viaje.desc": "Drogá un león con yuyo gatero",
+  "advancement.gianni.doping.title": "Doping",
+  "advancement.gianni.doping.desc": "Dopá al león que estás montando"
 }
