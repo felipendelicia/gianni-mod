@@ -71,6 +71,7 @@ public final class ModGameTests {
             if (cow.getLastHurtByMob() != lion) {
                 helper.fail("la vaca no entró en pánico tras el rugido");
             }
+            if (!lion.isRoaringAnim()) helper.fail("roar() no activó el flag de animación de rugido");
             helper.succeed();
         });
 

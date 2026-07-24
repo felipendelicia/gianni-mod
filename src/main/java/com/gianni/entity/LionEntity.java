@@ -75,7 +75,10 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_ROLLING =
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ROARING =
+        SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private int tripTicks;   // server; no persiste: si se recarga el mundo, se corta el viaje
+    private int roarAnimTicks;
 
     public LionEntity(EntityType<? extends LionEntity> type, Level level) {
         super(type, level);
@@ -98,6 +101,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         builder.define(DATA_STALKING, false);
         builder.define(DATA_TRIPPING, false);
         builder.define(DATA_ROLLING, false);
+        builder.define(DATA_ROARING, false);
     }
 
     public LionVariant getVariant() { return LionVariant.byId(this.entityData.get(DATA_VARIANT)); }
@@ -108,6 +112,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     public boolean isTripping() { return this.entityData.get(DATA_TRIPPING); }
     public boolean isRolling() { return this.entityData.get(DATA_ROLLING); }
     public void setRolling(boolean rolling) { this.entityData.set(DATA_ROLLING, rolling); }
+    public boolean isRoaringAnim() { return this.entityData.get(DATA_ROARING); }
 
     public void applyDoping() {
         // Velocidad II + Fuerza I + Regeneración I, 2 min; con partículas visibles
@@ -138,9 +143,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     public void roar() {
         if (this.level().isClientSide()) return;
         this.playSound(ModSounds.LION_ROAR.get(), 2.0f, 1.0f);
+        this.entityData.set(DATA_ROARING, true);
+        this.roarAnimTicks = 20;
         if (this.level() instanceof ServerLevel server) {
+            Vec3 look = this.getLookAngle();
             server.sendParticles(ParticleTypes.CLOUD,
-                this.getX(), this.getEyeY(), this.getZ(), 8, 0.5, 0.3, 0.5, 0.02);
+                this.getX() + look.x * 1.2, this.getEyeY() - 0.2, this.getZ() + look.z * 1.2,
+                8, 0.3, 0.2, 0.3, 0.05);
             for (Mob prey : server.getEntitiesOfClass(Mob.class,
                     this.getBoundingBox().inflate(16.0),
                     e -> LionHuntPreyGoal.PREY.contains(e.getType()))) {
@@ -175,6 +184,9 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             this.entityData.set(DATA_STALKING,
                 !this.isTame() && target != null && target.isAlive()
                     && this.distanceToSqr(target) > 16.0);
+            if (this.roarAnimTicks > 0 && --this.roarAnimTicks == 0) {
+                this.entityData.set(DATA_ROARING, false);
+            }
         }
         if (this.tripTicks > 0) {
             this.tripTicks--;
