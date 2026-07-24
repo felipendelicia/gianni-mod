@@ -10,8 +10,9 @@ Agrega leones a las sabanas: cazan de noche, descansan de día, y se pueden dome
 - **Spawn natural** en sabanas, en manadas de 2–4 con variantes mezcladas, más **guaridas** generadas (roca con huesos y su manada, ~1 cada 40 chunks).
 - **León negro**: variante rara (3 % de los leones salvajes), con melena igual que el macho normal; se puede heredar al criar.
 - **Día/noche**: de día los salvajes descansan echados y no molestan; de noche cazan vacas, ovejas, cerdos, gallinas, conejos… y jugadores.
-- **Rugido**: el macho ruge al anochecer y al entrar en combate — las presas cercanas huyen en pánico. El león negro, al rugir, reproduce uno de dos audios propios elegido al azar (subtítulo "Un león negro opina").
+- **Rugido**: el macho ruge periódicamente (~1-2 min) y al entrar en combate — las presas cercanas huyen en pánico. El león negro, al rugir, reproduce uno de dos audios propios elegido al azar (subtítulo "Un león negro opina").
 - **Acecho**: se agachan al fijar una presa lejana antes de correr a atacarla.
+- **Descanso**: de día alternan entre echarse en pose esfinge (panza al piso, patas delanteras extendidas) y caminar un rato, ciclo tras ciclo.
 - **Cachorros** que se persiguen y saltan entre ellos.
 - **Modelo y texturas**: hocico, orejas, melena en capas (solo machos adultos) y cola con mechón; pelaje con sombreado y cara detallada en las cuatro variantes (hembra, macho, blanco, negro); ojos emisivos de noche y al acechar, apagados de día quieto.
 

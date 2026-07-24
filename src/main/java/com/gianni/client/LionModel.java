@@ -28,6 +28,10 @@ public class LionModel extends EntityModel<LionRenderState> {
     private final ModelPart leftFrontUpper;
     private final ModelPart rightHindUpper;
     private final ModelPart leftHindUpper;
+    private final ModelPart rightFrontLower;
+    private final ModelPart leftFrontLower;
+    private final ModelPart rightHindLower;
+    private final ModelPart leftHindLower;
     private final ModelPart tail1;
     private final ModelPart tail2;
 
@@ -49,6 +53,10 @@ public class LionModel extends EntityModel<LionRenderState> {
         this.leftFrontUpper = root.getChild("left_front_upper");
         this.rightHindUpper = root.getChild("right_hind_upper");
         this.leftHindUpper = root.getChild("left_hind_upper");
+        this.rightFrontLower = this.rightFrontUpper.getChild("right_front_lower");
+        this.leftFrontLower = this.leftFrontUpper.getChild("left_front_lower");
+        this.rightHindLower = this.rightHindUpper.getChild("right_hind_lower");
+        this.leftHindLower = this.leftHindUpper.getChild("left_hind_lower");
         this.tail1 = root.getChild("tail1");
         this.tail2 = this.tail1.getChild("tail2");
     }
@@ -190,7 +198,7 @@ public class LionModel extends EntityModel<LionRenderState> {
             this.leftHindUpper.y += 3.0f;
         }
 
-        if (s.sitting || s.resting) {
+        if (s.sitting && !s.resting) {
             this.bodyFront.y += 5.0f;
             this.bodyBack.y += 5.0f;
             this.belly.y += 5.0f;
@@ -203,10 +211,28 @@ public class LionModel extends EntityModel<LionRenderState> {
             this.leftFrontUpper.y += 5.0f;
             this.rightHindUpper.y += 5.0f;
             this.leftHindUpper.y += 5.0f;
-            if (s.resting) {
-                this.head.y += 2.0f;
-                this.head.xRot += 0.3f;
-            }
+        }
+
+        if (s.resting) {                          // esfinge: panza al piso, patas delanteras al frente
+            this.bodyFront.y += 7.0f;
+            this.bodyBack.y += 7.0f;
+            this.belly.y += 6.5f;
+            this.head.y += 6.0f;
+            this.head.xRot += 0.1f + Mth.sin(s.ageInTicks * 0.03f) * 0.06f;   // cabeceo lento
+            // delanteras: húmero vertical apoyado, antebrazo plano hacia adelante
+            this.rightFrontUpper.xRot = 0.0f;
+            this.leftFrontUpper.xRot = 0.0f;
+            this.rightFrontUpper.y += 8.0f;
+            this.leftFrontUpper.y += 8.0f;
+            this.rightFrontLower.xRot = -Mth.HALF_PI;
+            this.leftFrontLower.xRot = -Mth.HALF_PI;
+            // traseras recogidas: muslo horizontal, canilla vertical
+            this.rightHindUpper.xRot = -Mth.HALF_PI;
+            this.leftHindUpper.xRot = -Mth.HALF_PI;
+            this.rightHindUpper.y += 6.0f;
+            this.leftHindUpper.y += 6.0f;
+            this.rightHindLower.xRot = Mth.HALF_PI;
+            this.leftHindLower.xRot = Mth.HALF_PI;
         }
     }
 }

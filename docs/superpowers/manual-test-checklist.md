@@ -2,7 +2,7 @@
 
 ## Regresión v0.2.0
 - [ ] Domesticar, sentar, seguir, montar, collar (+velocidad), cría con variantes.
-- [ ] Rugido al anochecer (machos) espanta vacas/ovejas; loot con pelajes y colmillo.
+- [ ] Rugido periódico (~1-2 min, machos y negro; también al entrar en combate) espanta vacas/ovejas; loot con pelajes y colmillo.
 - [ ] Guarida en sabana con manada.
 
 ## Nuevo en v0.3.0 — Yuyos
@@ -16,7 +16,8 @@
 - [ ] Modelo nuevo: hocico, orejas, melena en capas (solo machos adultos), cola con mechón.
 - [ ] Texturas: pelaje con sombreado, cara detallada, 4 variantes distinguibles.
 - [ ] Cachorro escala bien, sin melena ni collar.
-- [ ] Poses: sentado, descanso (cabeza apoyada), acecho agachado, rodar en viaje.
+- [ ] Poses: sentado, acecho agachado, rodar en viaje.
+- [ ] Descanso: pose esfinge (panza al piso, patas delanteras al frente), alterna con caminatas (~15-40 s echado, ~10-30 s paseando).
 - [ ] Rugido: mandíbula se abre + nube frente al hocico.
 - [ ] Ojos emisivos de noche y acechando; apagados de día quieto.
 - [ ] Saddle y collar bien ubicados en el modelo nuevo.
