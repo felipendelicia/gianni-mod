@@ -49,6 +49,16 @@ public class LionDenFeature extends Feature<NoneFeatureConfiguration> {
                 level.setBlock(p.above(1), Blocks.DEAD_BUSH.defaultBlockState(), 3);
             }
         }
+        // yuyos silvestres: mezcla aleatoria, maduros, sobre farmland (jardincito salvaje)
+        int yuyos = 3 + random.nextInt(4);
+        for (int i = 0; i < yuyos; i++) {
+            BlockPos p = origin.offset(random.nextInt(17) - 8, 0, random.nextInt(17) - 8);
+            if (!level.isEmptyBlock(p.above(1)) || !level.getBlockState(p).isSolid()) continue;
+            var crop = random.nextBoolean() ? com.gianni.ModBlocks.YUYO_GATERO_CROP : com.gianni.ModBlocks.YUYO_DOPANTE_CROP;
+            level.setBlock(p, net.minecraft.world.level.block.Blocks.FARMLAND.defaultBlockState(), 3);
+            level.setBlock(p.above(1), crop.get().defaultBlockState()
+                .setValue(com.gianni.block.YuyoCropBlock.AGE, com.gianni.block.YuyoCropBlock.MAX_AGE), 3);
+        }
         // manada 2-4
         int count = 2 + random.nextInt(3);
         for (int i = 0; i < count; i++) {

@@ -146,6 +146,11 @@ public final class ModGameTests {
             int lions = level.getEntitiesOfClass(LionEntity.class,
                 new net.minecraft.world.phys.AABB(origin).inflate(16.0)).size();
             if (lions < 2) helper.fail("guarida sin manada: " + lions + " leones");
+            boolean yuyos = false;
+            for (BlockPos p : BlockPos.betweenClosed(origin.offset(-10, -1, -10), origin.offset(10, 3, 10))) {
+                if (level.getBlockState(p).getBlock() instanceof com.gianni.block.YuyoCropBlock) { yuyos = true; break; }
+            }
+            if (!yuyos) helper.fail("guarida sin yuyos silvestres");
             helper.succeed();
         });
 

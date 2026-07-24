@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
-"""Genera data/gianni/structure/lion_arena.nbt: plataforma 16x3x16 con piso de
-smooth_stone y aire arriba, para que los gametests tengan suelo garantizado."""
+"""Genera data/gianni/structure/lion_arena.nbt: plataforma 16x4x16 con piso de
+smooth_stone y aire arriba, para que los gametests tengan suelo garantizado.
+
+ADAPT (task 5, v0.3.0): subido de 16x3x16 a 16x4x16. Con origin en
+relative y=2 (el tope de la caja original), el GameTest bounding box
+colocaba una capa de barrier exactamente en origin.y+1 (una encima del
+tope de la estructura), justo donde LionDenFeature necesita colocar el
+crop del yuyo (farmland en origin.y, crop en origin.y+1). Eso hacía
+fallar lion_den_places el 100% de las veces (no era mala suerte:
+level.isEmptyBlock(p.above(1)) daba siempre false, confirmado con
+logging temporal). La capa extra de aire (y=3) deja hueco libre arriba
+de origin antes de que el harness ponga su barrier."""
 import gzip
 import struct
 from pathlib import Path
 
 OUT = Path(__file__).resolve().parent.parent / "src/main/resources/data/gianni/structure/lion_arena.nbt"
 DATA_VERSION = 4903  # Minecraft 26.2
-SIZE_X, SIZE_Y, SIZE_Z = 16, 3, 16
+SIZE_X, SIZE_Y, SIZE_Z = 16, 4, 16
 
 
 def tag_string(s):
@@ -46,7 +56,7 @@ blocks = []
 for x in range(SIZE_X):
     for z in range(SIZE_Z):
         blocks.append(block_entry(x, 0, z, 0))          # piso
-        for y in (1, 2):
+        for y in (1, 2, 3):
             blocks.append(block_entry(x, y, z, 1))      # aire (limpia el área)
 
 root = named(10, "", compound(
