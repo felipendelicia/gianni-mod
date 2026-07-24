@@ -4,5 +4,10 @@
   "entity.gianni.lion_ambient": "El león gruñe",
   "entity.gianni.lion_roar": "El león ruge",
   "entity.gianni.lion_hurt": "El león herido",
-  "entity.gianni.lion_death": "El león muere"
+  "entity.gianni.lion_death": "El león muere",
+  "item.gianni.lion_pelt": "Pelaje de león",
+  "item.gianni.white_lion_pelt": "Pelaje de león blanco",
+  "item.gianni.lion_fang": "Colmillo de león",
+  "block.gianni.lion_pelt_carpet": "Alfombra de pelaje de león",
+  "block.gianni.white_lion_pelt_carpet": "Alfombra de pelaje blanco"
 }

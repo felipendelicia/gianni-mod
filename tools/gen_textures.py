@@ -53,7 +53,46 @@ def egg():
     im.save(OUT / "item/lion_spawn_egg.png")
 
 
+GOLD = (198, 154, 98)
+GOLD_DARK = (150, 110, 66)
+WHITE = (232, 228, 218)
+WHITE_DARK = (190, 186, 176)
+
+
+def pelt(name, base, dark):
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([2, 3, 13, 12], radius=3, fill=base)
+    for x, y in [(4, 5), (7, 8), (10, 5), (6, 10), (11, 9)]:
+        d.point([(x, y)], fill=dark)
+    d.rectangle([2, 12, 13, 13], fill=dark)
+    (OUT / "item").mkdir(parents=True, exist_ok=True)
+    im.save(OUT / f"item/{name}.png")
+
+
+def fang():
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.polygon([(6, 2), (10, 2), (9, 9), (8, 13), (7, 9)], fill=(240, 236, 224))
+    d.line([(8, 4), (8, 11)], fill=(200, 194, 180))
+    im.save(OUT / "item/lion_fang.png")
+
+
+def carpet_block(name, base, dark):
+    im = Image.new("RGBA", (16, 16), base)
+    d = ImageDraw.Draw(im)
+    for x, y in [(1, 2), (5, 6), (9, 1), (13, 5), (3, 11), (8, 9), (12, 13), (6, 14), (14, 10), (2, 7)]:
+        d.point([(x, y), (x + 1, y)], fill=dark)
+    (OUT / "block").mkdir(parents=True, exist_ok=True)
+    im.save(OUT / f"block/{name}.png")
+
+
 for name, pal in PALETTES.items():
     paint(name, pal)
 egg()
+pelt("lion_pelt", GOLD, GOLD_DARK)
+pelt("white_lion_pelt", WHITE, WHITE_DARK)
+fang()
+carpet_block("lion_pelt_carpet", GOLD, GOLD_DARK)
+carpet_block("white_lion_pelt_carpet", WHITE, WHITE_DARK)
 print("ok")

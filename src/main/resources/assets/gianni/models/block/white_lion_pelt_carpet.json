@@ -1,0 +1,1 @@
+{ "parent": "minecraft:block/carpet", "textures": { "wool": "gianni:block/white_lion_pelt_carpet" } }

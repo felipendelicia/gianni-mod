@@ -12,6 +12,8 @@ public class GianniMod {
     public GianniMod(IEventBus modEventBus, ModContainer modContainer) {
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModEntities.ITEMS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
         ModSounds.SOUND_EVENTS.register(modEventBus);
         ModGameTests.TEST_FUNCTIONS.register(modEventBus);
     }

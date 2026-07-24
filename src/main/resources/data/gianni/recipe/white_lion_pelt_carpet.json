@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["##"],
+  "key": { "#": "gianni:white_lion_pelt" },
+  "result": { "id": "gianni:white_lion_pelt_carpet", "count": 3 }
+}

@@ -4,5 +4,10 @@
   "entity.gianni.lion_ambient": "Lion grumbles",
   "entity.gianni.lion_roar": "Lion roars",
   "entity.gianni.lion_hurt": "Lion hurts",
-  "entity.gianni.lion_death": "Lion dies"
+  "entity.gianni.lion_death": "Lion dies",
+  "item.gianni.lion_pelt": "Lion Pelt",
+  "item.gianni.white_lion_pelt": "White Lion Pelt",
+  "item.gianni.lion_fang": "Lion Fang",
+  "block.gianni.lion_pelt_carpet": "Lion Pelt Carpet",
+  "block.gianni.white_lion_pelt_carpet": "White Lion Pelt Carpet"
 }
