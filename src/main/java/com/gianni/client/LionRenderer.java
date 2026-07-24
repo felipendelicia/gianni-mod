@@ -31,6 +31,10 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
         s.saddled = lion.isSaddled();
         s.stalking = lion.isStalking();
         s.collared = lion.hasCollar();
+        s.rolling = lion.isRolling();
+        s.tripping = lion.isTripping();
+        s.roaring = lion.isRoaringAnim();
+        s.nightEyes = lion.level().isDarkOutside() || lion.isStalking();
         s.texture = switch (lion.getVariant()) {
             case MALE -> TEX_MALE;
             case WHITE -> TEX_WHITE;

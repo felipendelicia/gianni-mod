@@ -11,4 +11,8 @@ public class LionRenderState extends LivingEntityRenderState {
     public boolean saddled;
     public boolean stalking;
     public boolean collared;
+    public boolean rolling;
+    public boolean tripping;
+    public boolean roaring;
+    public boolean nightEyes;
 }
