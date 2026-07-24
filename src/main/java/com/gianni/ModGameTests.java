@@ -117,5 +117,23 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_COLLAR =
+        TEST_FUNCTIONS.register("lion_collar", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            lion.setTame(true, false);
+            lion.setItemSlot(EquipmentSlot.BODY, new ItemStack(ModItems.FANG_COLLAR.get()));
+            if (!lion.hasCollar()) {
+                helper.fail("collar en BODY pero hasCollar()=false (¿tag can_wear_collar? ¿componente?)");
+            }
+            var rider = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+            float with = lion.getRiddenSpeed(rider);
+            lion.setItemSlot(EquipmentSlot.BODY, ItemStack.EMPTY);
+            float without = lion.getRiddenSpeed(rider);
+            if (with <= without) {
+                helper.fail("collar no aumenta velocidad: " + with + " <= " + without);
+            }
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }

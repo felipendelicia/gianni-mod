@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["S S", "F F", " F "],
+  "key": { "S": "minecraft:string", "F": "gianni:lion_fang" },
+  "result": { "id": "gianni:fang_collar", "count": 1 }
+}

@@ -36,6 +36,9 @@ def paint(name, pal):
     box_region(d, 12, 46, 3, 10, 3, pal["base"], pal["dark"])    # pata B
     box_region(d, 56, 0, 1, 9, 1, pal["dark"], pal["dark"])      # cola
     box_region(d, 36, 46, 11, 3, 8, (90, 60, 40), (60, 40, 25))  # montura
+    box_region(d, 0, 56, 7, 1, 7, (70, 45, 30), (50, 32, 20))    # collar (cuero)
+    for cx in (2, 6, 10, 14, 18, 22):                            # colmillos colgando
+        d.point([(cx, 63)], fill=(240, 236, 224))
     # cara frontal de la cabeza: box (0,0) 8x8x6 -> cara frontal en (6,6)..(13,13)
     d.point([(8, 9), (11, 9)], fill=BLACK)                        # ojos
     d.rectangle([9, 11, 10, 12], fill=PINK)                       # nariz
@@ -78,6 +81,15 @@ def fang():
     im.save(OUT / "item/lion_fang.png")
 
 
+def collar_item():
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.arc([2, 4, 13, 15], start=200, end=340, fill=(70, 45, 30), width=2)
+    for x, y in [(4, 11), (8, 13), (12, 11)]:
+        d.polygon([(x, y), (x + 1, y), (x, y + 3)], fill=(240, 236, 224))
+    im.save(OUT / "item/fang_collar.png")
+
+
 def carpet_block(name, base, dark):
     im = Image.new("RGBA", (16, 16), base)
     d = ImageDraw.Draw(im)
@@ -93,6 +105,7 @@ egg()
 pelt("lion_pelt", GOLD, GOLD_DARK)
 pelt("white_lion_pelt", WHITE, WHITE_DARK)
 fang()
+collar_item()
 carpet_block("lion_pelt_carpet", GOLD, GOLD_DARK)
 carpet_block("white_lion_pelt_carpet", WHITE, WHITE_DARK)
 print("ok")

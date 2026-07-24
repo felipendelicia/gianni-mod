@@ -1,6 +1,7 @@
 package com.gianni.entity;
 
 import com.gianni.ModEntities;
+import com.gianni.ModItems;
 import com.gianni.ModSounds;
 import com.gianni.entity.goal.LionAttackPlayersGoal;
 import com.gianni.entity.goal.LionCubPlayGoal;
@@ -207,6 +208,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (this.isTame() && this.isOwnedBy(player)) {
+            if (stack.is(ModItems.FANG_COLLAR.get()) && !this.isBaby() && !this.hasCollar()) {
+                if (!this.level().isClientSide()) {
+                    this.setItemSlot(EquipmentSlot.BODY, stack.consumeAndReturn(1, player));
+                    this.setGuaranteedDrop(EquipmentSlot.BODY);
+                }
+                return InteractionResult.SUCCESS;
+            }
             if (stack.is(Items.SADDLE) && !this.isBaby() && !this.isSaddled()) {
                 if (!this.level().isClientSide()) {
                     this.setItemSlot(EquipmentSlot.SADDLE, stack.consumeAndReturn(1, player));
@@ -260,9 +268,14 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     @Override
     public boolean canUseSlot(EquipmentSlot slot) {
-        return slot == EquipmentSlot.SADDLE
-            ? this.isAlive() && this.isTame() && !this.isBaby()
-            : super.canUseSlot(slot);
+        if (slot == EquipmentSlot.SADDLE || slot == EquipmentSlot.BODY) {
+            return this.isAlive() && this.isTame() && !this.isBaby();
+        }
+        return super.canUseSlot(slot);
+    }
+
+    public boolean hasCollar() {
+        return this.isWearingBodyArmor();
     }
 
     @Override
@@ -299,8 +312,9 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     }
 
     @Override
-    protected float getRiddenSpeed(Player player) {
-        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 1.6f;
+    public float getRiddenSpeed(Player player) {
+        float base = (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 1.6f;
+        return this.hasCollar() ? base * 1.3f : base;
     }
 
     @Override

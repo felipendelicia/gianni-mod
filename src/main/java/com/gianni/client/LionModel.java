@@ -15,6 +15,7 @@ public class LionModel extends EntityModel<LionRenderState> {
     private final ModelPart saddle;
     private final ModelPart head;
     private final ModelPart mane;
+    private final ModelPart collar;
     private final ModelPart rightFrontLeg;
     private final ModelPart leftFrontLeg;
     private final ModelPart rightHindLeg;
@@ -27,6 +28,7 @@ public class LionModel extends EntityModel<LionRenderState> {
         this.saddle = this.body.getChild("saddle");
         this.head = root.getChild("head");
         this.mane = this.head.getChild("mane");
+        this.collar = this.head.getChild("collar");
         this.rightFrontLeg = root.getChild("right_front_leg");
         this.leftFrontLeg = root.getChild("left_front_leg");
         this.rightHindLeg = root.getChild("right_hind_leg");
@@ -54,6 +56,9 @@ public class LionModel extends EntityModel<LionRenderState> {
             PartPose.offset(0.0f, 10.0f, -8.0f));
         head.addOrReplaceChild("mane",
             CubeListBuilder.create().texOffs(40, 10).addBox(-5.5f, -5.5f, -1.0f, 11.0f, 11.0f, 3.0f),
+            PartPose.ZERO);
+        head.addOrReplaceChild("collar",
+            CubeListBuilder.create().texOffs(0, 56).addBox(-3.5f, 2.0f, -4.5f, 7.0f, 1.0f, 7.0f),
             PartPose.ZERO);
 
         root.addOrReplaceChild("right_front_leg",
@@ -87,6 +92,7 @@ public class LionModel extends EntityModel<LionRenderState> {
         this.head.xRot = s.xRot * Mth.DEG_TO_RAD;
         this.mane.visible = s.male && !s.isBaby;
         this.saddle.visible = s.saddled;
+        this.collar.visible = s.collared && !s.isBaby;
 
         float pos = s.walkAnimationPos;
         float speed = s.walkAnimationSpeed;
