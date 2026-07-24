@@ -178,6 +178,7 @@ public final class ModGameTests {
     public static final Supplier<Consumer<GameTestHelper>> LION_CATNIP =
         TEST_FUNCTIONS.register("lion_catnip", () -> helper -> {
             LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            lion.setVariant(LionVariant.MALE); // debe poder rugir para que la regresión de abajo tenga sentido
             Cow cow = helper.spawnMob(EntityTypes.COW, new BlockPos(5, 2, 5)).spawn();
             lion.setTarget(cow);
             var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
@@ -186,7 +187,15 @@ public final class ModGameTests {
             if (!lion.isTripping()) helper.fail("el yuyo gatero no activó el viaje");
             if (lion.getTarget() != null) helper.fail("el viaje no limpió el target");
             if (!player.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty()) helper.fail("no consumió el yuyo");
-            helper.succeed();
+            // Regresión: un target adquirido a mitad del viaje (p.ej. por un target selector de combate)
+            // no debe hacer que el león ruja mientras sigue en el viaje. roar() se dispara desde aiStep(),
+            // así que hace falta dejar pasar un tick de server para que el bloque de auto-rugido corra.
+            lion.setTarget(cow);
+            helper.runAfterDelay(1, () -> {
+                if (!lion.isTripping()) helper.fail("el león salió del viaje antes de tiempo");
+                if (lion.isRoaringAnim()) helper.fail("el rugido de combate se disparó en pleno viaje");
+                helper.succeed();
+            });
         });
 
     public static final Supplier<Consumer<GameTestHelper>> LION_DOPING =

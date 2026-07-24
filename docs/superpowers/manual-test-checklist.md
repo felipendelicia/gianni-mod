@@ -22,6 +22,6 @@
 - [ ] Saddle y collar bien ubicados en el modelo nuevo.
 
 ## Nuevo en v0.3.0 — León negro
-- [ ] León negro spawmea raro (~3%) en sabana, con melena; cría puede heredar el negro.
+- [ ] León negro spawnea raro (~3%) en sabana, con melena; cría puede heredar el negro.
 - [ ] Rugido del negro alterna los dos audios custom; subtítulo "Un león negro opina".
 - [ ] Textura negra: sombreado legible, melena más oscura, ojos/nariz visibles; ojos emisivos de noche.

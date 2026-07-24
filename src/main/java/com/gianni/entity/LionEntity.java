@@ -166,7 +166,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             this.level().addParticle(ModParticles.YUYO.get(),
                 this.getRandomX(0.8), this.getRandomY() + 0.3, this.getRandomZ(0.8), 0.0, 0.05, 0.0);
         }
-        if (!this.level().isClientSide() && this.canRoar()) {
+        if (!this.level().isClientSide() && this.canRoar() && !this.isTripping()) {
             if (this.roarCooldown > 0) this.roarCooldown--;
             boolean night = !this.isDaytime();
             if (!night) {
@@ -182,7 +182,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         if (!this.level().isClientSide()) {
             LivingEntity target = this.getTarget();
             this.entityData.set(DATA_STALKING,
-                !this.isTame() && target != null && target.isAlive()
+                !this.isTripping() && !this.isTame() && target != null && target.isAlive()
                     && this.distanceToSqr(target) > 16.0);
             if (this.roarAnimTicks > 0 && --this.roarAnimTicks == 0) {
                 this.entityData.set(DATA_ROARING, false);
@@ -223,7 +223,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new LionCatnipGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(3, new LionRestGoal(this));
