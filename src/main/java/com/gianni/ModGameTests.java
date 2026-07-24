@@ -183,5 +183,17 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_DOPING =
+        TEST_FUNCTIONS.register("lion_doping", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(ModItems.YUYO_DOPANTE.get()));
+            lion.mobInteract(player, net.minecraft.world.InteractionHand.MAIN_HAND);
+            if (!lion.hasEffect(net.minecraft.world.effect.MobEffects.SPEED)) helper.fail("sin Velocidad");
+            if (!lion.hasEffect(net.minecraft.world.effect.MobEffects.STRENGTH)) helper.fail("sin Fuerza");
+            if (!lion.hasEffect(net.minecraft.world.effect.MobEffects.REGENERATION)) helper.fail("sin Regeneración");
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "gianni:lion_doping",
+  "structure": "gianni:lion_arena",
+  "max_ticks": 100
+}

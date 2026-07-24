@@ -23,6 +23,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -106,6 +108,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     public boolean isTripping() { return this.entityData.get(DATA_TRIPPING); }
     public boolean isRolling() { return this.entityData.get(DATA_ROLLING); }
     public void setRolling(boolean rolling) { this.entityData.set(DATA_ROLLING, rolling); }
+
+    public void applyDoping() {
+        // Velocidad II + Fuerza I + Regeneración I, 2 min; con partículas visibles
+        this.addEffect(new MobEffectInstance(MobEffects.SPEED, 2400, 1));
+        this.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 2400, 0));
+        this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 2400, 0));
+    }
 
     public void applyCatnip() {
         this.ejectPassengers();           // en viaje no se maneja
@@ -249,6 +258,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             stack.consume(1, player);
             if (!this.level().isClientSide()) {
                 this.applyCatnip();
+            }
+            return InteractionResult.SUCCESS;
+        }
+        if (stack.is(ModItems.YUYO_DOPANTE.get())) {
+            stack.consume(1, player);
+            if (!this.level().isClientSide()) {
+                this.applyDoping();
             }
             return InteractionResult.SUCCESS;
         }
