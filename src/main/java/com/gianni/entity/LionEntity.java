@@ -10,8 +10,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -31,12 +34,16 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 public class LionEntity extends TamableAnimal {
 
@@ -122,9 +129,58 @@ public class LionEntity extends TamableAnimal {
     @Override
     protected SoundEvent getDeathSound() { return SoundEvents.POLAR_BEAR_DEATH; }
 
+    public static final Set<Item> TAMING_FOOD = Set.of(
+        Items.BEEF, Items.PORKCHOP, Items.CHICKEN, Items.MUTTON, Items.RABBIT);
+
     @Override
     public boolean isFood(ItemStack stack) {
-        return false; // Task 6 define la comida real
+        return TAMING_FOOD.contains(stack.getItem());
+    }
+
+    public boolean canBeTamed() {
+        return this.isBaby() || (this.isDaytime() && this.isResting());
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (this.isTame() && this.isOwnedBy(player)) {
+            // --- Task 7 inserta acá la rama de montura (saddle / montar) ---
+            if (this.isFood(stack) && this.getHealth() < this.getMaxHealth() && !this.isBaby()) {
+                stack.consume(1, player);
+                this.heal(4.0f);
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.isEmpty() && !this.isVehicle()) {
+                if (!this.level().isClientSide()) {
+                    this.setOrderedToSit(!this.isOrderedToSit());
+                }
+                return InteractionResult.SUCCESS;
+            }
+            return super.mobInteract(player, hand); // deja que Animal maneje el modo amor (cría)
+        }
+        if (!this.isTame() && this.isFood(stack) && this.canBeTamed()) {
+            stack.consume(1, player);
+            if (!this.level().isClientSide()) {
+                if (this.random.nextInt(3) == 0) {
+                    this.tame(player);
+                    this.setOrderedToSit(true);
+                    this.level().broadcastEntityEvent(this, EntityEvent.TAMING_SUCCEEDED);
+                } else {
+                    this.level().broadcastEntityEvent(this, EntityEvent.TAMING_FAILED);
+                }
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    @Override
+    protected void applyTamingSideEffects() {
+        if (this.isTame()) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40.0);
+            this.setHealth(40.0f);
+        }
     }
 
     @Override
