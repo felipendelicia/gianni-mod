@@ -61,6 +61,8 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_RESTING =
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_STALKING =
+        SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
 
     public LionEntity(EntityType<? extends LionEntity> type, Level level) {
         super(type, level);
@@ -80,12 +82,14 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         super.defineSynchedData(builder);
         builder.define(DATA_VARIANT, LionVariant.FEMALE.id());
         builder.define(DATA_RESTING, false);
+        builder.define(DATA_STALKING, false);
     }
 
     public LionVariant getVariant() { return LionVariant.byId(this.entityData.get(DATA_VARIANT)); }
     public void setVariant(LionVariant variant) { this.entityData.set(DATA_VARIANT, variant.id()); }
     public boolean isResting() { return this.entityData.get(DATA_RESTING); }
     public void setResting(boolean resting) { this.entityData.set(DATA_RESTING, resting); }
+    public boolean isStalking() { return this.entityData.get(DATA_STALKING); }
 
     public boolean isDaytime() {
         return this.level().isBrightOutside();
@@ -128,6 +132,12 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             if (this.roarCooldown == 0 && this.getTarget() != null && this.getTarget().isAlive()) {
                 this.roar();
             }
+        }
+        if (!this.level().isClientSide()) {
+            LivingEntity target = this.getTarget();
+            this.entityData.set(DATA_STALKING,
+                !this.isTame() && target != null && target.isAlive()
+                    && this.distanceToSqr(target) > 16.0);
         }
     }
 

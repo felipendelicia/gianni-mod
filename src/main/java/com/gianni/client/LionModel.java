@@ -95,6 +95,17 @@ public class LionModel extends EntityModel<LionRenderState> {
         this.leftFrontLeg.xRot = Mth.cos(pos * 0.6662f + Mth.PI) * 1.4f * speed;
         this.rightHindLeg.xRot = this.leftFrontLeg.xRot;
         this.tail.xRot = 0.6f + Mth.cos(pos * 0.3331f) * 0.25f * speed;
+        this.tail.yRot = Mth.sin(s.ageInTicks * 0.08f) * 0.25f + Mth.sin(pos * 0.6662f) * 0.3f * speed;
+
+        if (s.stalking) {
+            this.body.y += 3.0f;
+            this.head.y += 4.5f;
+            this.head.xRot += 0.2f;
+            this.rightFrontLeg.y += 3.0f;
+            this.leftFrontLeg.y += 3.0f;
+            this.rightHindLeg.y += 3.0f;
+            this.leftHindLeg.y += 3.0f;
+        }
 
         if (s.sitting || s.resting) {
             this.body.y += 5.0f;
@@ -107,6 +118,10 @@ public class LionModel extends EntityModel<LionRenderState> {
             this.leftFrontLeg.y += 5.0f;
             this.rightHindLeg.y += 5.0f;
             this.leftHindLeg.y += 5.0f;
+            if (s.resting) {
+                this.head.y += 2.0f;
+                this.head.xRot += 0.3f;
+            }
         }
     }
 }

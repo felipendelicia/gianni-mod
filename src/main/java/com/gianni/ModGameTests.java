@@ -74,5 +74,15 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_STALKING =
+        TEST_FUNCTIONS.register("lion_stalking", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            Cow cow = helper.spawnMob(EntityTypes.COW, new BlockPos(7, 2, 7)).spawn();
+            lion.setTarget(cow);
+            helper.succeedWhen(() -> {
+                if (!lion.isStalking()) helper.fail("lion salvaje con target lejano no está acechando");
+            });
+        });
+
     private ModGameTests() {}
 }
