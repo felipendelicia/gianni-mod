@@ -5,6 +5,9 @@ import com.gianni.entity.LionVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Consumer;
@@ -43,6 +46,17 @@ public final class ModGameTests {
                 helper.fail("variante inválida: " + v);
             }
             cub.discard();
+            helper.succeed();
+        });
+
+    public static final Supplier<Consumer<GameTestHelper>> LION_SADDLE =
+        TEST_FUNCTIONS.register("lion_saddle", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            lion.setTame(true, false);
+            lion.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
+            if (!lion.isSaddled()) {
+                helper.fail("saddle equipada pero isSaddled()=false (¿falta gianni:lion en #minecraft:can_equip_saddle?)");
+            }
             helper.succeed();
         });
 
