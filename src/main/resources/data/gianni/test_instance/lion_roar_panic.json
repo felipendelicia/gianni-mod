@@ -2,6 +2,6 @@
   "type": "minecraft:function",
   "environment": "minecraft:default",
   "function": "gianni:lion_roar_panic",
-  "structure": "minecraft:empty",
+  "structure": "gianni:lion_arena",
   "max_ticks": 200
 }
