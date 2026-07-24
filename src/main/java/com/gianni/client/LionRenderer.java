@@ -11,6 +11,7 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
     private static final Identifier TEX_MALE = GianniMod.id("textures/entity/lion/lion_male.png");
     private static final Identifier TEX_FEMALE = GianniMod.id("textures/entity/lion/lion_female.png");
     private static final Identifier TEX_WHITE = GianniMod.id("textures/entity/lion/lion_white.png");
+    private static final Identifier TEX_BLACK = GianniMod.id("textures/entity/lion/lion_black.png");
 
     public LionRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new LionModel(ctx.bakeLayer(GianniModClient.LION)),
@@ -38,6 +39,7 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
         s.texture = switch (lion.getVariant()) {
             case MALE -> TEX_MALE;
             case WHITE -> TEX_WHITE;
+            case BLACK -> TEX_BLACK;
             default -> TEX_FEMALE;
         };
     }

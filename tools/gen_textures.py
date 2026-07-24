@@ -25,6 +25,7 @@ RAMPS = {
     "lion_male":   {"fur": ramp((198, 154, 98)), "mane": ramp((107, 74, 38)), "belly": ramp((222, 196, 156))},
     "lion_female": {"fur": ramp((204, 162, 108)), "mane": ramp((150, 110, 66)), "belly": ramp((226, 202, 164))},
     "lion_white":  {"fur": ramp((232, 228, 218)), "mane": ramp((200, 196, 186)), "belly": ramp((244, 242, 236))},
+    "lion_black":  {"fur": ramp((52, 48, 46)), "mane": ramp((22, 20, 20)), "belly": ramp((84, 80, 76))},
 }
 BLACK = (30, 24, 18)
 PINK = (198, 120, 110)
