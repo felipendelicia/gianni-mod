@@ -16,6 +16,7 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
     public LionRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new LionModel(ctx.bakeLayer(GianniModClient.LION)),
                    new LionModel(ctx.bakeLayer(GianniModClient.LION_BABY)), 0.7f);
+        this.addLayer(new LionEyesLayer(this));
     }
 
     @Override
