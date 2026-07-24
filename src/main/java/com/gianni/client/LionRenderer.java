@@ -28,7 +28,7 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
         s.male = lion.getVariant() == LionVariant.MALE;
         s.resting = lion.isResting();
         s.sitting = lion.isInSittingPose();
-        s.saddled = false; // Task 7 lo conecta a lion.isSaddled()
+        s.saddled = lion.isSaddled();
         s.texture = switch (lion.getVariant()) {
             case MALE -> TEX_MALE;
             case WHITE -> TEX_WHITE;

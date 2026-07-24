@@ -3,6 +3,7 @@ package com.gianni.entity;
 import com.gianni.entity.goal.LionAttackPlayersGoal;
 import com.gianni.entity.goal.LionHuntPreyGoal;
 import com.gianni.entity.goal.LionRestGoal;
+import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -17,6 +18,9 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -37,15 +41,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public class LionEntity extends TamableAnimal {
+public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     private static final EntityDataAccessor<Integer> DATA_VARIANT =
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.INT);
@@ -145,7 +151,20 @@ public class LionEntity extends TamableAnimal {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (this.isTame() && this.isOwnedBy(player)) {
-            // --- Task 7 inserta acá la rama de montura (saddle / montar) ---
+            if (stack.is(Items.SADDLE) && !this.isBaby() && !this.isSaddled()) {
+                if (!this.level().isClientSide()) {
+                    this.setItemSlot(EquipmentSlot.SADDLE, stack.consumeAndReturn(1, player));
+                    this.setGuaranteedDrop(EquipmentSlot.SADDLE);
+                }
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.isEmpty() && this.isSaddled() && !this.isBaby() && !player.isShiftKeyDown()) {
+                if (!this.level().isClientSide()) {
+                    this.setOrderedToSit(false);
+                    player.startRiding(this);
+                }
+                return InteractionResult.SUCCESS;
+            }
             if (this.isFood(stack) && this.getHealth() < this.getMaxHealth() && !this.isBaby()) {
                 stack.consume(1, player);
                 this.heal(4.0f);
@@ -182,6 +201,69 @@ public class LionEntity extends TamableAnimal {
             this.setHealth(40.0f);
         }
     }
+
+    @Override
+    public boolean canUseSlot(EquipmentSlot slot) {
+        return slot == EquipmentSlot.SADDLE
+            ? this.isAlive() && this.isTame() && !this.isBaby()
+            : super.canUseSlot(slot);
+    }
+
+    @Override
+    protected Holder<SoundEvent> getEquipSound(EquipmentSlot slot, ItemStack stack, Equippable equippable) {
+        return slot == EquipmentSlot.SADDLE ? SoundEvents.HORSE_SADDLE : super.getEquipSound(slot, stack, equippable);
+    }
+
+    private float playerJumpPendingScale;
+
+    @Override
+    @Nullable
+    public LivingEntity getControllingPassenger() {
+        if (this.isSaddled() && this.getFirstPassenger() instanceof Player p && this.isOwnedBy(p)) {
+            return p;
+        }
+        return super.getControllingPassenger();
+    }
+
+    @Override
+    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) {
+        return new Vec3(player.xxa * 0.5f, 0.0, player.zza >= 0.0f ? player.zza : player.zza * 0.25f);
+    }
+
+    @Override
+    protected void tickRidden(Player player, Vec3 travelVector) {
+        super.tickRidden(player, travelVector);
+        this.setRot(player.getYRot(), player.getXRot() * 0.5f);
+        this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
+        if (this.onGround() && this.playerJumpPendingScale > 0.0f) {
+            Vec3 dm = this.getDeltaMovement();
+            this.setDeltaMovement(dm.x, 0.7 * this.playerJumpPendingScale, dm.z);
+            this.playerJumpPendingScale = 0.0f;
+        }
+    }
+
+    @Override
+    protected float getRiddenSpeed(Player player) {
+        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 1.6f;
+    }
+
+    @Override
+    public void onPlayerJump(int jumpPower) {
+        this.playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * jumpPower / 90.0f;
+    }
+
+    @Override
+    public boolean canJump() {
+        return this.isSaddled();
+    }
+
+    @Override
+    public void handleStartJump(int jumpPower) {
+        this.playSound(SoundEvents.POLAR_BEAR_WARNING);
+    }
+
+    @Override
+    public void handleStopJump() {}
 
     @Override
     @Nullable
