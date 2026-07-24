@@ -189,9 +189,19 @@ public final class ModGameTests {
             var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(ModItems.YUYO_DOPANTE.get()));
             lion.mobInteract(player, net.minecraft.world.InteractionHand.MAIN_HAND);
-            if (!lion.hasEffect(net.minecraft.world.effect.MobEffects.SPEED)) helper.fail("sin Velocidad");
-            if (!lion.hasEffect(net.minecraft.world.effect.MobEffects.STRENGTH)) helper.fail("sin Fuerza");
-            if (!lion.hasEffect(net.minecraft.world.effect.MobEffects.REGENERATION)) helper.fail("sin Regeneración");
+            var speed = lion.getEffect(net.minecraft.world.effect.MobEffects.SPEED);
+            if (speed == null) helper.fail("sin Velocidad");
+            else if (speed.getAmplifier() != 1) helper.fail("Velocidad con amplifier incorrecto: " + speed.getAmplifier());
+            else if (speed.getDuration() <= 2300) helper.fail("Velocidad con duración insuficiente: " + speed.getDuration());
+            var strength = lion.getEffect(net.minecraft.world.effect.MobEffects.STRENGTH);
+            if (strength == null) helper.fail("sin Fuerza");
+            else if (strength.getAmplifier() != 0) helper.fail("Fuerza con amplifier incorrecto: " + strength.getAmplifier());
+            else if (strength.getDuration() <= 2300) helper.fail("Fuerza con duración insuficiente: " + strength.getDuration());
+            var regeneration = lion.getEffect(net.minecraft.world.effect.MobEffects.REGENERATION);
+            if (regeneration == null) helper.fail("sin Regeneración");
+            else if (regeneration.getAmplifier() != 0) helper.fail("Regeneración con amplifier incorrecto: " + regeneration.getAmplifier());
+            else if (regeneration.getDuration() <= 2300) helper.fail("Regeneración con duración insuficiente: " + regeneration.getDuration());
+            if (!player.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty()) helper.fail("no consumió el yuyo dopante");
             helper.succeed();
         });
 
