@@ -142,7 +142,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     public void roar() {
         if (this.level().isClientSide()) return;
-        this.playSound(ModSounds.LION_ROAR.get(), 2.0f, 1.0f);
+        this.playSound((this.getVariant() == LionVariant.BLACK ? ModSounds.LION_BLACK_ROAR : ModSounds.LION_ROAR).get(), 2.0f, 1.0f);
         this.entityData.set(DATA_ROARING, true);
         this.roarAnimTicks = 20;
         if (this.level() instanceof ServerLevel server) {

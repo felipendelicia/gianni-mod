@@ -13,6 +13,7 @@ public final class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> LION_ROAR = register("lion_roar");
     public static final DeferredHolder<SoundEvent, SoundEvent> LION_HURT = register("lion_hurt");
     public static final DeferredHolder<SoundEvent, SoundEvent> LION_DEATH = register("lion_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LION_BLACK_ROAR = register("lion_black_roar");
 
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(GianniMod.id(name)));

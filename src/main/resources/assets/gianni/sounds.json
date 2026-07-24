@@ -22,5 +22,9 @@
       { "name": "minecraft:entity.polar_bear.death", "type": "event", "pitch": 0.8, "volume": 1.0 }
     ],
     "subtitle": "entity.gianni.lion_death"
+  },
+  "lion_black_roar": {
+    "sounds": [ "gianni:opinegro", "gianni:opiniones" ],
+    "subtitle": "entity.gianni.lion_black_roar"
   }
 }
