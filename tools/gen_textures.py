@@ -130,6 +130,15 @@ def yuyo_stages(name, base, dark, accent):
         im.save(OUT / f"block/{name}_stage{stage}.png")
 
 
+def yuyo_particle():
+    im = Image.new("RGBA", (8, 8), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([2, 2, 5, 5], fill=(150, 210, 130, 255))
+    d.point([(3, 3)], fill=(220, 240, 200, 255))
+    (OUT / "particle").mkdir(parents=True, exist_ok=True)
+    im.save(OUT / "particle/yuyo.png")
+
+
 for name, pal in PALETTES.items():
     paint(name, pal)
 egg()
@@ -143,4 +152,5 @@ yuyo_item("yuyo_gatero", GATERO, GATERO_DARK, (220, 230, 200))
 yuyo_item("yuyo_dopante", DOPANTE, DOPANTE_RED, DOPANTE_RED)
 yuyo_stages("yuyo_gatero", GATERO, GATERO_DARK, (220, 230, 200))
 yuyo_stages("yuyo_dopante", DOPANTE, DOPANTE_RED, DOPANTE_RED)
+yuyo_particle()
 print("ok")

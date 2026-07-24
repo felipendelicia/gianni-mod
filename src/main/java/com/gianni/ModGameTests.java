@@ -169,5 +169,19 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_CATNIP =
+        TEST_FUNCTIONS.register("lion_catnip", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            Cow cow = helper.spawnMob(EntityTypes.COW, new BlockPos(5, 2, 5)).spawn();
+            lion.setTarget(cow);
+            var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(ModItems.YUYO_GATERO.get()));
+            lion.mobInteract(player, net.minecraft.world.InteractionHand.MAIN_HAND);
+            if (!lion.isTripping()) helper.fail("el yuyo gatero no activó el viaje");
+            if (lion.getTarget() != null) helper.fail("el viaje no limpió el target");
+            if (!player.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty()) helper.fail("no consumió el yuyo");
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }

@@ -25,4 +25,9 @@ public class GianniModClient {
     static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.LION.get(), LionRenderer::new);
     }
+
+    @SubscribeEvent
+    static void onRegisterParticles(net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(com.gianni.ModParticles.YUYO.get(), YuyoParticle.Provider::new);
+    }
 }

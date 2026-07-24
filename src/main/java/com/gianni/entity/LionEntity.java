@@ -3,8 +3,10 @@ package com.gianni.entity;
 import com.gianni.ModCriteria;
 import com.gianni.ModEntities;
 import com.gianni.ModItems;
+import com.gianni.ModParticles;
 import com.gianni.ModSounds;
 import com.gianni.entity.goal.LionAttackPlayersGoal;
+import com.gianni.entity.goal.LionCatnipGoal;
 import com.gianni.entity.goal.LionCubPlayGoal;
 import com.gianni.entity.goal.LionHuntPreyGoal;
 import com.gianni.entity.goal.LionRestGoal;
@@ -67,6 +69,11 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_STALKING =
         SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_TRIPPING =
+        SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ROLLING =
+        SynchedEntityData.defineId(LionEntity.class, EntityDataSerializers.BOOLEAN);
+    private int tripTicks;   // server; no persiste: si se recarga el mundo, se corta el viaje
 
     public LionEntity(EntityType<? extends LionEntity> type, Level level) {
         super(type, level);
@@ -87,6 +94,8 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         builder.define(DATA_VARIANT, LionVariant.FEMALE.id());
         builder.define(DATA_RESTING, false);
         builder.define(DATA_STALKING, false);
+        builder.define(DATA_TRIPPING, false);
+        builder.define(DATA_ROLLING, false);
     }
 
     public LionVariant getVariant() { return LionVariant.byId(this.entityData.get(DATA_VARIANT)); }
@@ -94,6 +103,17 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     public boolean isResting() { return this.entityData.get(DATA_RESTING); }
     public void setResting(boolean resting) { this.entityData.set(DATA_RESTING, resting); }
     public boolean isStalking() { return this.entityData.get(DATA_STALKING); }
+    public boolean isTripping() { return this.entityData.get(DATA_TRIPPING); }
+    public boolean isRolling() { return this.entityData.get(DATA_ROLLING); }
+    public void setRolling(boolean rolling) { this.entityData.set(DATA_ROLLING, rolling); }
+
+    public void applyCatnip() {
+        this.ejectPassengers();           // en viaje no se maneja
+        this.setTarget(null);
+        this.setOrderedToSit(false);
+        this.tripTicks = 900;             // 45 s
+        this.entityData.set(DATA_TRIPPING, true);
+    }
 
     public boolean isDaytime() {
         return this.level().isBrightOutside();
@@ -124,6 +144,10 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     @Override
     public void aiStep() {
         super.aiStep();
+        if (this.level().isClientSide() && this.isTripping() && this.random.nextInt(4) == 0) {
+            this.level().addParticle(ModParticles.YUYO.get(),
+                this.getRandomX(0.8), this.getRandomY() + 0.3, this.getRandomZ(0.8), 0.0, 0.05, 0.0);
+        }
         if (!this.level().isClientSide() && this.canRoar()) {
             if (this.roarCooldown > 0) this.roarCooldown--;
             boolean night = !this.isDaytime();
@@ -142,6 +166,17 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
             this.entityData.set(DATA_STALKING,
                 !this.isTame() && target != null && target.isAlive()
                     && this.distanceToSqr(target) > 16.0);
+        }
+        if (this.tripTicks > 0) {
+            this.tripTicks--;
+            this.setTarget(null);             // nadie caza durante el viaje
+            if (this.tripTicks % 20 == 0 && this.level() instanceof ServerLevel sl) {
+                sl.sendParticles(ParticleTypes.HEART, this.getX(), this.getEyeY() + 0.3, this.getZ(), 1, 0.3, 0.2, 0.3, 0.0);
+            }
+            if (this.tripTicks == 0) {
+                this.entityData.set(DATA_TRIPPING, false);
+                this.setRolling(false);
+            }
         }
     }
 
@@ -168,6 +203,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new LionCatnipGoal(this));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(3, new LionRestGoal(this));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, true));
@@ -209,6 +245,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (stack.is(ModItems.YUYO_GATERO.get())) {
+            stack.consume(1, player);
+            if (!this.level().isClientSide()) {
+                this.applyCatnip();
+            }
+            return InteractionResult.SUCCESS;
+        }
         if (this.isTame() && this.isOwnedBy(player)) {
             if (stack.is(ModItems.FANG_COLLAR.get()) && !this.isBaby() && !this.hasCollar()) {
                 if (!this.level().isClientSide()) {
