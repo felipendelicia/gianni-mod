@@ -3,6 +3,7 @@ package com.gianni.entity;
 import com.gianni.ModEntities;
 import com.gianni.ModSounds;
 import com.gianni.entity.goal.LionAttackPlayersGoal;
+import com.gianni.entity.goal.LionCubPlayGoal;
 import com.gianni.entity.goal.LionHuntPreyGoal;
 import com.gianni.entity.goal.LionRestGoal;
 import net.minecraft.core.Holder;
@@ -169,6 +170,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, true));
         this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.1, 10.0f, 2.0f));
         this.goalSelector.addGoal(6, new BreedGoal(this, 1.0));
+        this.goalSelector.addGoal(6, new LionCubPlayGoal(this, 1.2));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));

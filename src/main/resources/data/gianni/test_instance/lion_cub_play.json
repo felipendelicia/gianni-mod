@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "gianni:lion_cub_play",
+  "structure": "minecraft:empty",
+  "max_ticks": 400
+}

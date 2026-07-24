@@ -84,5 +84,18 @@ public final class ModGameTests {
             });
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_CUB_PLAY =
+        TEST_FUNCTIONS.register("lion_cub_play", () -> helper -> {
+            LionEntity a = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            LionEntity b = helper.spawnMob(ModEntities.LION.get(), new BlockPos(4, 2, 4)).spawn();
+            a.setBaby(true);
+            b.setBaby(true);
+            helper.succeedWhen(() -> {
+                if (a.getNavigation().isDone() && b.getNavigation().isDone()) {
+                    helper.fail("ningún cachorro se movió a jugar");
+                }
+            });
+        });
+
     private ModGameTests() {}
 }

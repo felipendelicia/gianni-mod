@@ -15,7 +15,7 @@ public class LionRestGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return !lion.isTame() && lion.isDaytime() && lion.getTarget() == null && !lion.isInLove();
+        return !lion.isTame() && !lion.isBaby() && lion.isDaytime() && lion.getTarget() == null && !lion.isInLove();
     }
 
     @Override
