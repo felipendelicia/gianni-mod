@@ -5,7 +5,6 @@ import com.gianni.entity.LionVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.clock.WorldClocks;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.cow.Cow;
@@ -192,11 +191,27 @@ public final class ModGameTests {
             // no debe hacer que el león ruja mientras sigue en el viaje. roar() se dispara desde aiStep(),
             // así que hace falta dejar pasar un tick de server para que el bloque de auto-rugido corra.
             lion.setTarget(cow);
+            lion.setRoarCooldownForTesting(0); // sin el gate !isTripping(), esto rugiría en el próximo tick
             helper.runAfterDelay(1, () -> {
                 if (!lion.isTripping()) helper.fail("el león salió del viaje antes de tiempo");
                 if (lion.isRoaringAnim()) helper.fail("el rugido de combate se disparó en pleno viaje");
                 helper.succeed();
             });
+        });
+
+    public static final Supplier<Consumer<GameTestHelper>> LION_NO_WILD_LOVE =
+        TEST_FUNCTIONS.register("lion_no_wild_love", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            Cow cow = helper.spawnMob(EntityTypes.COW, new BlockPos(5, 2, 5)).spawn();
+            lion.setTarget(cow); // bloquea el descanso (LionRestGoal exige target == null): no es intento de tameo
+            var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.BEEF));
+            lion.mobInteract(player, net.minecraft.world.InteractionHand.MAIN_HAND);
+            if (lion.isInLove()) helper.fail("el león salvaje entró en modo amor fuera de la ventana de tameo");
+            if (player.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty()) {
+                helper.fail("la carne se consumió aunque el león no podía ser tameado");
+            }
+            helper.succeed();
         });
 
     public static final Supplier<Consumer<GameTestHelper>> LION_DOPING =
@@ -235,10 +250,8 @@ public final class ModGameTests {
 
     public static final Supplier<Consumer<GameTestHelper>> LION_REST =
         TEST_FUNCTIONS.register("lion_rest", () -> helper -> {
-            // ADAPT: ServerLevel ya no expone setDayTime(long) en 26.2; el tiempo vive en ServerClockManager
-            // (ver mc-26-2-api-renames.md). tick 1000 en el clock del overworld == el viejo setDayTime(1000).
-            helper.getLevel().clockManager().setTotalTicks(
-                helper.getLevel().registryAccess().getOrThrow(WorldClocks.OVERWORLD), 1000L);
+            // El tick 1000 (de día) lo pone el test_environment gianni:day (clock_time), con teardown
+            // automático — ver data/gianni/test_environment/day.json.
             LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(2, 2, 2)).spawn();
             lion.setVariant(LionVariant.FEMALE);
             helper.runAfterDelay(10, () -> {

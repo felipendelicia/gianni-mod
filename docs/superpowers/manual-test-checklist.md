@@ -2,7 +2,7 @@
 
 ## Regresión v0.2.0
 - [ ] Domesticar, sentar, seguir, montar, collar (+velocidad), cría con variantes.
-- [ ] Rugido periódico (~1-2 min, machos y negro; también al entrar en combate) espanta vacas/ovejas; loot con pelajes y colmillo.
+- [ ] Rugido periódico (~1-2 min, machos y negro; también en pleno combate) espanta vacas/ovejas; loot con pelajes y colmillo.
 - [ ] Guarida en sabana con manada.
 
 ## Nuevo en v0.3.0 — Yuyos

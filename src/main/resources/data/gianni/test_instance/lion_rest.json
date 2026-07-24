@@ -1,6 +1,6 @@
 {
   "type": "minecraft:function",
-  "environment": "minecraft:default",
+  "environment": "gianni:day",
   "function": "gianni:lion_rest",
   "structure": "gianni:lion_arena",
   "max_ticks": 100

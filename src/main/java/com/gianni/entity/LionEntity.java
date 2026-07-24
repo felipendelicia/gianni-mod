@@ -159,6 +159,8 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         this.roarCooldown = 1200 + this.random.nextInt(1201);   // 60-120 s
     }
 
+    public void setRoarCooldownForTesting(int ticks) { this.roarCooldown = ticks; } // solo gametests
+
     @Override
     public void aiStep() {
         super.aiStep();
@@ -254,6 +256,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     public boolean canBeTamed() {
         return this.isBaby() || (this.isDaytime() && this.isResting());
+    }
+
+    @Override
+    public boolean canFallInLove() {
+        // Sin esto, un adulto salvaje fuera de ventana de tameo (canBeTamed()=false) cae al
+        // Animal.mobInteract vanilla, que consume la comida y activa modo amor igual.
+        return super.canFallInLove() && this.isTame();
     }
 
     @Override
