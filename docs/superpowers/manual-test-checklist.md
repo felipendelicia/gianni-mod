@@ -14,7 +14,7 @@
 
 ## Nuevo en v0.3.0 — Gráficos
 - [ ] Modelo nuevo: hocico, orejas, melena en capas (solo machos adultos), cola con mechón.
-- [ ] Texturas: pelaje con sombreado, cara detallada, 3 variantes distinguibles.
+- [ ] Texturas: pelaje con sombreado, cara detallada, 4 variantes distinguibles.
 - [ ] Cachorro escala bien, sin melena ni collar.
 - [ ] Poses: sentado, descanso (cabeza apoyada), acecho agachado, rodar en viaje.
 - [ ] Rugido: mandíbula se abre + nube frente al hocico.
