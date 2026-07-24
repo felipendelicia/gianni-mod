@@ -1,5 +1,6 @@
 package com.gianni.entity;
 
+import com.gianni.ModEntities;
 import com.gianni.entity.goal.LionAttackPlayersGoal;
 import com.gianni.entity.goal.LionHuntPreyGoal;
 import com.gianni.entity.goal.LionRestGoal;
@@ -268,6 +269,15 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     @Override
     @Nullable
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob partner) {
-        return null; // Task 8
+        LionEntity cub = ModEntities.LION.get().create(level, EntitySpawnReason.BREEDING);
+        if (cub == null) return null;
+        LionVariant inherited = this.random.nextBoolean() || !(partner instanceof LionEntity other)
+            ? this.getVariant()
+            : other.getVariant();
+        if (this.random.nextFloat() < 0.05f) {
+            inherited = LionVariant.WHITE;
+        }
+        cub.setVariant(inherited);
+        return cub;
     }
 }
