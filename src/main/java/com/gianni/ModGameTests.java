@@ -5,6 +5,7 @@ import com.gianni.entity.LionVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.clock.WorldClocks;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.cow.Cow;
@@ -230,6 +231,20 @@ public final class ModGameTests {
             lion.roar();
             if (!lion.isRoaringAnim()) helper.fail("roar() del negro no activó el flag de animación");
             helper.succeed();
+        });
+
+    public static final Supplier<Consumer<GameTestHelper>> LION_REST =
+        TEST_FUNCTIONS.register("lion_rest", () -> helper -> {
+            // ADAPT: ServerLevel ya no expone setDayTime(long) en 26.2; el tiempo vive en ServerClockManager
+            // (ver mc-26-2-api-renames.md). tick 1000 en el clock del overworld == el viejo setDayTime(1000).
+            helper.getLevel().clockManager().setTotalTicks(
+                helper.getLevel().registryAccess().getOrThrow(WorldClocks.OVERWORLD), 1000L);
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(2, 2, 2)).spawn();
+            lion.setVariant(LionVariant.FEMALE);
+            helper.runAfterDelay(10, () -> {
+                if (!lion.isResting()) helper.fail("león salvaje adulto de día no descansa");
+                helper.succeed();
+            });
         });
 
     private ModGameTests() {}
