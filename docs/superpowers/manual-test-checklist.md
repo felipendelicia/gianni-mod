@@ -1,20 +1,27 @@
-# Checklist manual — Leones v0.2.0
+# Checklist manual — Leones v0.3.0
 
-Mundo creativo, sabana. `./gradlew runClient`.
+## Regresión v0.2.0
+- [ ] Domesticar, sentar, seguir, montar, collar (+velocidad), cría con variantes.
+- [ ] Rugido al anochecer (machos) espanta vacas/ovejas; loot con pelajes y colmillo.
+- [ ] Guarida en sabana con manada.
 
-## Regresión v0.1.0
-- [ ] Domesticar (día+descanso+carne), sentar, seguir, defender.
-- [ ] Ensillar, montar (WASD+espacio), desmontar, drop de saddle al morir.
-- [ ] Cría con herencia de variante; persistencia al salir/entrar.
+## Nuevo en v0.3.0 — Yuyos
+- [ ] Guarida genera yuyos silvestres maduros (mezcla de ambos).
+- [ ] Cultivo: plantar en farmland, 4 etapas, bonemeal funciona, drop 1-3.
+- [ ] Yuyo gatero en león (salvaje y manso): rueda panza arriba, círculos, saltitos, corazones + partículas verdes, ~45 s; salvaje no ataca durante el viaje; montado te baja.
+- [ ] Yuyo dopante: partículas de poción; montado se siente más rápido; advancement "Doping" solo si estás montado.
+- [ ] Advancement "Mal viaje" con el primer yuyo gatero.
 
-## Nuevo en v0.2.0
-- [ ] Sonidos: gruñido ambiente más grave; rugido notorio al anochecer (solo machos).
-- [ ] Rugido en combate: vacas/ovejas cercanas huyen del macho.
-- [ ] Acecho: león salvaje con presa lejos se agacha antes de correr.
-- [ ] Cola: se balancea sola; cachorros: dos cachorros juntos se persiguen y saltan.
-- [ ] Descanso: cabeza apoyada al echarse de día.
-- [ ] Matar león salvaje: dropea pelaje + carne; a veces colmillo. Blanco dropea pelaje blanco.
-- [ ] Craft: 2 pelajes → 3 alfombras (color según pelaje); colocarlas y romperlas.
-- [ ] Craft collar (2 hilos + 3 colmillos) → equiparlo al león propio → se ve en el cuello → montado va más rápido → drop al morir.
-- [ ] Advancements: pestaña con "Sabana" y el árbol; "Copo de nieve" al domesticar un blanco.
-- [ ] Guarida: explorar sabana (elytra/creative) hasta encontrar la roca con huesos y manada.
+## Nuevo en v0.3.0 — Gráficos
+- [ ] Modelo nuevo: hocico, orejas, melena en capas (solo machos adultos), cola con mechón.
+- [ ] Texturas: pelaje con sombreado, cara detallada, 3 variantes distinguibles.
+- [ ] Cachorro escala bien, sin melena ni collar.
+- [ ] Poses: sentado, descanso (cabeza apoyada), acecho agachado, rodar en viaje.
+- [ ] Rugido: mandíbula se abre + nube frente al hocico.
+- [ ] Ojos emisivos de noche y acechando; apagados de día quieto.
+- [ ] Saddle y collar bien ubicados en el modelo nuevo.
+
+## Nuevo en v0.3.0 — León negro
+- [ ] León negro spawmea raro (~3%) en sabana, con melena; cría puede heredar el negro.
+- [ ] Rugido del negro alterna los dos audios custom; subtítulo "Un león negro opina".
+- [ ] Textura negra: sombreado legible, melena más oscura, ojos/nariz visibles; ojos emisivos de noche.
