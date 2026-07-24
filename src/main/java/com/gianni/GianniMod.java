@@ -10,7 +10,8 @@ public class GianniMod {
     public static final String MODID = "gianni";
 
     public GianniMod(IEventBus modEventBus, ModContainer modContainer) {
-        // Los DeferredRegister de ModEntities se registran acá (Task 2).
+        ModEntities.ENTITY_TYPES.register(modEventBus);
+        ModEntities.ITEMS.register(modEventBus);
     }
 
     public static Identifier id(String path) {
