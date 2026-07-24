@@ -135,5 +135,19 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_DEN_PLACES =
+        TEST_FUNCTIONS.register("lion_den_places", () -> helper -> {
+            var level = helper.getLevel();
+            var origin = helper.absolutePos(new BlockPos(8, 2, 8));
+            boolean placed = com.gianni.ModFeatures.LION_DEN_FEATURE.get().place(
+                net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration.INSTANCE,
+                level, level.getChunkSource().getGenerator(), level.getRandom(), origin);
+            if (!placed) helper.fail("la feature no se colocó");
+            int lions = level.getEntitiesOfClass(LionEntity.class,
+                new net.minecraft.world.phys.AABB(origin).inflate(16.0)).size();
+            if (lions < 2) helper.fail("guarida sin manada: " + lions + " leones");
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }

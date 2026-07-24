@@ -17,6 +17,7 @@ public class GianniMod {
         ModSounds.SOUND_EVENTS.register(modEventBus);
         ModLootConditions.LOOT_CONDITIONS.register(modEventBus);
         ModCriteria.TRIGGERS.register(modEventBus);
+        ModFeatures.FEATURES.register(modEventBus);
         ModGameTests.TEST_FUNCTIONS.register(modEventBus);
     }
 
