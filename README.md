@@ -1,25 +1,20 @@
+# Gianni Mod
 
-Installation information
-=======
+Leones para Minecraft Java 26.2 (NeoForge).
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+- Spawnean en sabanas en manadas (macho/hembra/blanco raro).
+- De día descansan; de noche cazan (y te cazan).
+- Domesticables con carne cruda (cachorros siempre; adultos solo descansando de día).
+- Montables con saddle (WASD + espacio para saltar).
+- Criables: la variante se hereda; 5% de león blanco.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## Desarrollo
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+Requisitos: JDK 25 (el toolchain lo baja solo) y nada más.
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+    ./gradlew runClient        # jugar con el mod
+    ./gradlew runGameTestServer  # tests
+    ./gradlew build            # jar en build/libs/
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+Texturas: `tools/gen_textures.py` (Python 3 + Pillow) regenera los PNG.
+Checklist de pruebas manuales: docs/superpowers/manual-test-checklist.md
