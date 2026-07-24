@@ -1,4 +1,45 @@
 {
   "type": "minecraft:entity",
-  "pools": []
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "gianni:white_lion_pelt",
+              "functions": [{ "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 0, "max": 2 } }],
+              "conditions": [{ "condition": "gianni:lion_variant", "variant": "white" }]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "gianni:lion_pelt",
+              "functions": [{ "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 0, "max": 2 } }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:beef",
+          "functions": [{ "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 1, "max": 2 } }]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [{ "type": "minecraft:item", "name": "gianni:lion_fang" }],
+      "conditions": [
+        { "condition": "gianni:lion_wild" },
+        { "condition": "minecraft:killed_by_player" },
+        { "condition": "minecraft:random_chance", "chance": 0.1 }
+      ]
+    }
+  ]
 }

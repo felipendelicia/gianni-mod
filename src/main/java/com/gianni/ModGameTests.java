@@ -97,5 +97,25 @@ public final class ModGameTests {
             });
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_LOOT_VARIANT =
+        TEST_FUNCTIONS.register("lion_loot_variant", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            lion.setVariant(LionVariant.WHITE);
+            if (!com.gianni.loot.LionVariantCondition.matches(lion, LionVariant.WHITE)) {
+                helper.fail("variant WHITE no matchea WHITE");
+            }
+            if (com.gianni.loot.LionVariantCondition.matches(lion, LionVariant.MALE)) {
+                helper.fail("variant WHITE matchea MALE");
+            }
+            if (!com.gianni.loot.LionWildCondition.matches(lion)) {
+                helper.fail("león salvaje adulto no matchea wild");
+            }
+            lion.setTame(true, false);
+            if (com.gianni.loot.LionWildCondition.matches(lion)) {
+                helper.fail("león tame matchea wild");
+            }
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }
