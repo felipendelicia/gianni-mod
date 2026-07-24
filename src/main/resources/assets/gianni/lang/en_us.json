@@ -10,5 +10,17 @@
   "item.gianni.lion_fang": "Lion Fang",
   "block.gianni.lion_pelt_carpet": "Lion Pelt Carpet",
   "block.gianni.white_lion_pelt_carpet": "White Lion Pelt Carpet",
-  "item.gianni.fang_collar": "Fang Collar"
+  "item.gianni.fang_collar": "Fang Collar",
+  "advancement.gianni.root.title": "Savanna",
+  "advancement.gianni.root.desc": "Meet the lions (the easy way or the hard way)",
+  "advancement.gianni.tame.title": "Tamer",
+  "advancement.gianni.tame.desc": "Tame a lion with raw meat",
+  "advancement.gianni.ride.title": "Rider",
+  "advancement.gianni.ride.desc": "Ride a saddled lion",
+  "advancement.gianni.breed.title": "Breeder",
+  "advancement.gianni.breed.desc": "Breed a lion cub",
+  "advancement.gianni.white.title": "Snowflake",
+  "advancement.gianni.white.desc": "Tame a white lion",
+  "advancement.gianni.collar.title": "King of the Savanna",
+  "advancement.gianni.collar.desc": "Craft a fang collar"
 }

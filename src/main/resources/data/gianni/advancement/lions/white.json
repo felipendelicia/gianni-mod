@@ -1,0 +1,14 @@
+{
+  "parent": "gianni:lions/tame",
+  "display": {
+    "icon": { "id": "gianni:white_lion_pelt" },
+    "title": { "translate": "advancement.gianni.white.title" },
+    "description": { "translate": "advancement.gianni.white.desc" },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "tamed_white": { "trigger": "gianni:tamed_white_lion" }
+  }
+}

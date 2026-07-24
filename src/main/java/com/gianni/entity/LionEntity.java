@@ -1,5 +1,6 @@
 package com.gianni.entity;
 
+import com.gianni.ModCriteria;
 import com.gianni.ModEntities;
 import com.gianni.ModItems;
 import com.gianni.ModSounds;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
@@ -276,6 +278,14 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     public boolean hasCollar() {
         return this.isWearingBodyArmor();
+    }
+
+    @Override
+    public void tame(Player player) {
+        super.tame(player);
+        if (this.getVariant() == LionVariant.WHITE && player instanceof ServerPlayer sp) {
+            ModCriteria.TAMED_WHITE_LION.get().trigger(sp);
+        }
     }
 
     @Override

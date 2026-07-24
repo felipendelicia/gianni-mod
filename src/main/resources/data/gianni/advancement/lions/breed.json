@@ -1,0 +1,22 @@
+{
+  "parent": "gianni:lions/tame",
+  "display": {
+    "icon": { "id": "gianni:lion_pelt" },
+    "title": { "translate": "advancement.gianni.breed.title" },
+    "description": { "translate": "advancement.gianni.breed.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "bred": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "child": [
+          { "condition": "minecraft:entity_properties", "entity": "this",
+            "predicate": { "minecraft:entity_type": "gianni:lion" } }
+        ]
+      }
+    }
+  }
+}

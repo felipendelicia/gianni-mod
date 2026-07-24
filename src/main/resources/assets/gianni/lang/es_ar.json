@@ -10,5 +10,17 @@
   "item.gianni.lion_fang": "Colmillo de león",
   "block.gianni.lion_pelt_carpet": "Alfombra de pelaje de león",
   "block.gianni.white_lion_pelt_carpet": "Alfombra de pelaje blanco",
-  "item.gianni.fang_collar": "Collar de colmillos"
+  "item.gianni.fang_collar": "Collar de colmillos",
+  "advancement.gianni.root.title": "Sabana",
+  "advancement.gianni.root.desc": "Conocé a los leones (por las buenas o por las malas)",
+  "advancement.gianni.tame.title": "Domador",
+  "advancement.gianni.tame.desc": "Domesticá un león con carne cruda",
+  "advancement.gianni.ride.title": "Jinete",
+  "advancement.gianni.ride.desc": "Montá un león ensillado",
+  "advancement.gianni.breed.title": "Criador",
+  "advancement.gianni.breed.desc": "Criá un cachorro de león",
+  "advancement.gianni.white.title": "Copo de nieve",
+  "advancement.gianni.white.desc": "Domesticá un león blanco",
+  "advancement.gianni.collar.title": "Rey de la sabana",
+  "advancement.gianni.collar.desc": "Craftea un collar de colmillos"
 }

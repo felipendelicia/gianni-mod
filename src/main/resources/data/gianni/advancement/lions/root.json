@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": { "id": "gianni:lion_spawn_egg" },
+    "title": { "translate": "advancement.gianni.root.title" },
+    "description": { "translate": "advancement.gianni.root.desc" },
+    "frame": "task",
+    "background": "minecraft:block/sand",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "killed": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          { "condition": "minecraft:entity_properties", "entity": "this",
+            "predicate": { "minecraft:entity_type": "gianni:lion" } }
+        ]
+      }
+    },
+    "tamed": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": [
+          { "condition": "minecraft:entity_properties", "entity": "this",
+            "predicate": { "minecraft:entity_type": "gianni:lion" } }
+        ]
+      }
+    }
+  },
+  "requirements": [["killed", "tamed"]]
+}

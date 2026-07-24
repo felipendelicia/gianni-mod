@@ -1,0 +1,22 @@
+{
+  "parent": "gianni:lions/root",
+  "display": {
+    "icon": { "id": "minecraft:beef" },
+    "title": { "translate": "advancement.gianni.tame.title" },
+    "description": { "translate": "advancement.gianni.tame.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "tamed": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": [
+          { "condition": "minecraft:entity_properties", "entity": "this",
+            "predicate": { "minecraft:entity_type": "gianni:lion" } }
+        ]
+      }
+    }
+  }
+}
