@@ -82,6 +82,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     public LionEntity(EntityType<? extends LionEntity> type, Level level) {
         super(type, level);
+        this.roarCooldown = 1200 + this.random.nextInt(1201);   // evita coros al cargar la manada
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -134,7 +135,6 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     }
 
     private int roarCooldown;          // ticks; no persiste
-    private boolean roaredTonight;
 
     public boolean canRoar() {
         return this.getVariant().isMaleVariant() && !this.isBaby();
@@ -156,7 +156,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
                 prey.setLastHurtByMob(this);   // dispara PanicGoal vanilla sin daño
             }
         }
-        this.roarCooldown = 1200;
+        this.roarCooldown = 1200 + this.random.nextInt(1201);   // 60-120 s
     }
 
     @Override
@@ -168,15 +168,8 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
         }
         if (!this.level().isClientSide() && this.canRoar() && !this.isTripping()) {
             if (this.roarCooldown > 0) this.roarCooldown--;
-            boolean night = !this.isDaytime();
-            if (!night) {
-                this.roaredTonight = false;
-            } else if (!this.roaredTonight) {
-                this.roaredTonight = true;
-                this.roar();
-            }
-            if (this.roarCooldown == 0 && this.getTarget() != null && this.getTarget().isAlive()) {
-                this.roar();
+            if (this.roarCooldown == 0) {
+                this.roar();   // periódico; en combate simplemente coincide con target a la vista
             }
         }
         if (!this.level().isClientSide()) {
