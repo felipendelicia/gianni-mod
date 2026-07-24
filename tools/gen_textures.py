@@ -99,6 +99,37 @@ def carpet_block(name, base, dark):
     im.save(OUT / f"block/{name}.png")
 
 
+GATERO = (140, 190, 120)
+GATERO_DARK = (95, 140, 80)
+DOPANTE = (110, 150, 70)
+DOPANTE_RED = (170, 80, 60)
+
+
+def yuyo_item(name, base, dark, accent):
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    for x0, y0 in [(7, 3), (4, 6), (10, 6)]:                 # tallos
+        d.line([(8, 13), (x0, y0)], fill=dark)
+    for x, y in [(7, 2), (3, 5), (10, 5), (6, 8), (9, 9)]:   # hojas
+        d.rectangle([x, y, x + 1, y + 1], fill=base)
+    d.point([(8, 4), (5, 7)], fill=accent)
+    im.save(OUT / f"item/{name}.png")
+
+
+def yuyo_stages(name, base, dark, accent):
+    for stage in range(4):
+        im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+        d = ImageDraw.Draw(im)
+        h = 4 + stage * 3                                     # altura por etapa
+        for x0 in (4, 8, 12):
+            d.line([(x0, 15), (x0, 15 - h)], fill=dark)
+            for dy in range(2, h, 3):
+                d.point([(x0 - 1, 15 - dy), (x0 + 1, 15 - dy - 1)], fill=base)
+        if stage == 3:
+            d.point([(4, 15 - h), (8, 15 - h), (12, 15 - h)], fill=accent)
+        im.save(OUT / f"block/{name}_stage{stage}.png")
+
+
 for name, pal in PALETTES.items():
     paint(name, pal)
 egg()
@@ -108,4 +139,8 @@ fang()
 collar_item()
 carpet_block("lion_pelt_carpet", GOLD, GOLD_DARK)
 carpet_block("white_lion_pelt_carpet", WHITE, WHITE_DARK)
+yuyo_item("yuyo_gatero", GATERO, GATERO_DARK, (220, 230, 200))
+yuyo_item("yuyo_dopante", DOPANTE, DOPANTE_RED, DOPANTE_RED)
+yuyo_stages("yuyo_gatero", GATERO, GATERO_DARK, (220, 230, 200))
+yuyo_stages("yuyo_dopante", DOPANTE, DOPANTE_RED, DOPANTE_RED)
 print("ok")

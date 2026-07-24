@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "gianni:yuyo_crops",
+  "structure": "gianni:lion_arena",
+  "max_ticks": 100
+}

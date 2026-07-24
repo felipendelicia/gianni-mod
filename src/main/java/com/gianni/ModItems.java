@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.Equippable;
@@ -36,6 +37,13 @@ public final class ModItems {
                 .setEquipOnInteract(false)
                 .build())));
 
+    // ADAPT: verificado contra Item.java desofuscado (26.2): Item.Properties#useItemDescriptionPrefix()
+    // existe tal cual y setea el descriptionId a "item.<ns>.<path>" (nombre propio, no el del bloque).
+    public static final DeferredItem<Item> YUYO_GATERO = ITEMS.registerItem("yuyo_gatero",
+        props -> new BlockItem(ModBlocks.YUYO_GATERO_CROP.get(), props.useItemDescriptionPrefix()));
+    public static final DeferredItem<Item> YUYO_DOPANTE = ITEMS.registerItem("yuyo_dopante",
+        props -> new BlockItem(ModBlocks.YUYO_DOPANTE_CROP.get(), props.useItemDescriptionPrefix()));
+
     private ModItems() {}
 
     @SubscribeEvent
@@ -45,6 +53,8 @@ public final class ModItems {
             event.accept(WHITE_LION_PELT);
             event.accept(LION_FANG);
             event.accept(FANG_COLLAR);
+            event.accept(YUYO_GATERO);
+            event.accept(YUYO_DOPANTE);
         }
     }
 }

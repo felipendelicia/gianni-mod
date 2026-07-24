@@ -149,5 +149,25 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> YUYO_CROPS =
+        TEST_FUNCTIONS.register("yuyo_crops", () -> helper -> {
+            var level = helper.getLevel();
+            helper.setBlock(new BlockPos(2, 1, 2), net.minecraft.world.level.block.Blocks.FARMLAND);
+            helper.setBlock(new BlockPos(2, 2, 2), com.gianni.ModBlocks.YUYO_GATERO_CROP.get().defaultBlockState());
+            BlockPos abs = helper.absolutePos(new BlockPos(2, 2, 2));
+            for (int i = 0; i < 10 && level.getBlockState(abs).getValue(com.gianni.block.YuyoCropBlock.AGE) < com.gianni.block.YuyoCropBlock.MAX_AGE; i++) {
+                var st = level.getBlockState(abs);
+                ((com.gianni.block.YuyoCropBlock) st.getBlock()).performBonemeal(level, level.getRandom(), abs, st);
+            }
+            if (level.getBlockState(abs).getValue(com.gianni.block.YuyoCropBlock.AGE) != com.gianni.block.YuyoCropBlock.MAX_AGE) {
+                helper.fail("bonemeal no maduró el yuyo gatero");
+            }
+            var drops = net.minecraft.world.level.block.Block.getDrops(level.getBlockState(abs), level, abs, null);
+            if (drops.stream().noneMatch(s -> s.is(com.gianni.ModItems.YUYO_GATERO.get()))) {
+                helper.fail("crop maduro no dropea yuyo_gatero");
+            }
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }
