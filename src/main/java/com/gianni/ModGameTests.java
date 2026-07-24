@@ -211,5 +211,17 @@ public final class ModGameTests {
             helper.succeed();
         });
 
+    public static final Supplier<Consumer<GameTestHelper>> LION_BLACK_ROAR =
+        TEST_FUNCTIONS.register("lion_black_roar", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(2, 2, 2)).spawn();
+            lion.setVariant(LionVariant.BLACK);
+            if (lion.getVariant() != LionVariant.BLACK) helper.fail("setVariant(BLACK) no persistió");
+            if (LionVariant.byId(LionVariant.BLACK.id()) != LionVariant.BLACK) helper.fail("byId no rescata BLACK");
+            if (!lion.canRoar()) helper.fail("el león negro adulto debería poder rugir");
+            lion.roar();
+            if (!lion.isRoaringAnim()) helper.fail("roar() del negro no activó el flag de animación");
+            helper.succeed();
+        });
+
     private ModGameTests() {}
 }

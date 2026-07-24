@@ -137,7 +137,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     private boolean roaredTonight;
 
     public boolean canRoar() {
-        return this.getVariant() == LionVariant.MALE && !this.isBaby();
+        return this.getVariant().isMaleVariant() && !this.isBaby();
     }
 
     public void roar() {
@@ -217,7 +217,7 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
             EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
         float r = level.getRandom().nextFloat();
-        this.setVariant(r < 0.05f ? LionVariant.WHITE : r < 0.45f ? LionVariant.MALE : LionVariant.FEMALE);
+        this.setVariant(r < 0.03f ? LionVariant.BLACK : r < 0.08f ? LionVariant.WHITE : r < 0.48f ? LionVariant.MALE : LionVariant.FEMALE);
         return super.finalizeSpawn(level, difficulty, reason, spawnData);
     }
 

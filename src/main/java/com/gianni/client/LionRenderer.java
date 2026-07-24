@@ -25,7 +25,7 @@ public class LionRenderer extends AgeableMobRenderer<LionEntity, LionRenderState
     @Override
     public void extractRenderState(LionEntity lion, LionRenderState s, float partialTick) {
         super.extractRenderState(lion, s, partialTick);
-        s.male = lion.getVariant() == LionVariant.MALE;
+        s.male = lion.getVariant().isMaleVariant();
         s.resting = lion.isResting();
         s.sitting = lion.isInSittingPose();
         s.saddled = lion.isSaddled();
