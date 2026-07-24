@@ -1,0 +1,26 @@
+{
+  "lion_ambient": {
+    "sounds": [
+      { "name": "minecraft:entity.polar_bear.ambient", "type": "event", "pitch": 0.8, "volume": 1.0 }
+    ],
+    "subtitle": "entity.gianni.lion_ambient"
+  },
+  "lion_roar": {
+    "sounds": [
+      { "name": "minecraft:entity.ravager.roar", "type": "event", "pitch": 0.85, "volume": 1.5 }
+    ],
+    "subtitle": "entity.gianni.lion_roar"
+  },
+  "lion_hurt": {
+    "sounds": [
+      { "name": "minecraft:entity.polar_bear.hurt", "type": "event", "pitch": 0.85, "volume": 1.0 }
+    ],
+    "subtitle": "entity.gianni.lion_hurt"
+  },
+  "lion_death": {
+    "sounds": [
+      { "name": "minecraft:entity.polar_bear.death", "type": "event", "pitch": 0.8, "volume": 1.0 }
+    ],
+    "subtitle": "entity.gianni.lion_death"
+  }
+}

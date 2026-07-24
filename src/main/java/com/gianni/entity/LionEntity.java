@@ -1,6 +1,7 @@
 package com.gianni.entity;
 
 import com.gianni.ModEntities;
+import com.gianni.ModSounds;
 import com.gianni.entity.goal.LionAttackPlayersGoal;
 import com.gianni.entity.goal.LionHuntPreyGoal;
 import com.gianni.entity.goal.LionRestGoal;
@@ -128,13 +129,13 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
     }
 
     @Override
-    protected SoundEvent getAmbientSound() { return SoundEvents.POLAR_BEAR_AMBIENT; }
+    protected SoundEvent getAmbientSound() { return ModSounds.LION_AMBIENT.get(); }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.POLAR_BEAR_HURT; }
+    protected SoundEvent getHurtSound(DamageSource source) { return ModSounds.LION_HURT.get(); }
 
     @Override
-    protected SoundEvent getDeathSound() { return SoundEvents.POLAR_BEAR_DEATH; }
+    protected SoundEvent getDeathSound() { return ModSounds.LION_DEATH.get(); }
 
     public static final Set<Item> TAMING_FOOD = Set.of(
         Items.BEEF, Items.PORKCHOP, Items.CHICKEN, Items.MUTTON, Items.RABBIT);

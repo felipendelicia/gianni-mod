@@ -1,4 +1,8 @@
 {
   "entity.gianni.lion": "León",
-  "item.gianni.lion_spawn_egg": "Huevo generador de león"
+  "item.gianni.lion_spawn_egg": "Huevo generador de león",
+  "entity.gianni.lion_ambient": "El león gruñe",
+  "entity.gianni.lion_roar": "El león ruge",
+  "entity.gianni.lion_hurt": "El león herido",
+  "entity.gianni.lion_death": "El león muere"
 }

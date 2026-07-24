@@ -1,4 +1,8 @@
 {
   "entity.gianni.lion": "Lion",
-  "item.gianni.lion_spawn_egg": "Lion Spawn Egg"
+  "item.gianni.lion_spawn_egg": "Lion Spawn Egg",
+  "entity.gianni.lion_ambient": "Lion grumbles",
+  "entity.gianni.lion_roar": "Lion roars",
+  "entity.gianni.lion_hurt": "Lion hurts",
+  "entity.gianni.lion_death": "Lion dies"
 }
