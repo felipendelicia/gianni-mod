@@ -5,7 +5,9 @@ import com.gianni.entity.LionVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -56,6 +58,18 @@ public final class ModGameTests {
             lion.setItemSlot(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
             if (!lion.isSaddled()) {
                 helper.fail("saddle equipada pero isSaddled()=false (¿falta gianni:lion en #minecraft:can_equip_saddle?)");
+            }
+            helper.succeed();
+        });
+
+    public static final Supplier<Consumer<GameTestHelper>> LION_ROAR_PANIC =
+        TEST_FUNCTIONS.register("lion_roar_panic", () -> helper -> {
+            LionEntity lion = helper.spawnMob(ModEntities.LION.get(), new BlockPos(1, 2, 1)).spawn();
+            lion.setVariant(LionVariant.MALE);
+            Cow cow = helper.spawnMob(EntityTypes.COW, new BlockPos(3, 2, 3)).spawn();
+            lion.roar();
+            if (cow.getLastHurtByMob() != lion) {
+                helper.fail("la vaca no entró en pánico tras el rugido");
             }
             helper.succeed();
         });

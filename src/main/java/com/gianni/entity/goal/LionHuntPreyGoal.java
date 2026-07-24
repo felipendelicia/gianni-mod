@@ -9,7 +9,7 @@ import net.minecraft.world.entity.animal.Animal;
 import java.util.Set;
 
 public class LionHuntPreyGoal extends NearestAttackableTargetGoal<Animal> {
-    private static final Set<EntityType<?>> PREY = Set.of(
+    public static final Set<EntityType<?>> PREY = Set.of(
         EntityTypes.COW, EntityTypes.SHEEP, EntityTypes.PIG, EntityTypes.CHICKEN, EntityTypes.RABBIT);
     private final LionEntity lion;
 

@@ -6,6 +6,7 @@ import com.gianni.entity.goal.LionAttackPlayersGoal;
 import com.gianni.entity.goal.LionHuntPreyGoal;
 import com.gianni.entity.goal.LionRestGoal;
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.TamableAnimal;
@@ -87,6 +89,46 @@ public class LionEntity extends TamableAnimal implements PlayerRideableJumping {
 
     public boolean isDaytime() {
         return this.level().isBrightOutside();
+    }
+
+    private int roarCooldown;          // ticks; no persiste
+    private boolean roaredTonight;
+
+    public boolean canRoar() {
+        return this.getVariant() == LionVariant.MALE && !this.isBaby();
+    }
+
+    public void roar() {
+        if (this.level().isClientSide()) return;
+        this.playSound(ModSounds.LION_ROAR.get(), 2.0f, 1.0f);
+        if (this.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.CLOUD,
+                this.getX(), this.getEyeY(), this.getZ(), 8, 0.5, 0.3, 0.5, 0.02);
+            for (Mob prey : server.getEntitiesOfClass(Mob.class,
+                    this.getBoundingBox().inflate(16.0),
+                    e -> LionHuntPreyGoal.PREY.contains(e.getType()))) {
+                prey.setLastHurtByMob(this);   // dispara PanicGoal vanilla sin daño
+            }
+        }
+        this.roarCooldown = 1200;
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level().isClientSide() && this.canRoar()) {
+            if (this.roarCooldown > 0) this.roarCooldown--;
+            boolean night = !this.isDaytime();
+            if (!night) {
+                this.roaredTonight = false;
+            } else if (!this.roaredTonight) {
+                this.roaredTonight = true;
+                this.roar();
+            }
+            if (this.roarCooldown == 0 && this.getTarget() != null && this.getTarget().isAlive()) {
+                this.roar();
+            }
+        }
     }
 
     @Override
