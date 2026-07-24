@@ -9,7 +9,7 @@
 - [ ] Guarida genera yuyos silvestres maduros (mezcla de ambos).
 - [ ] Cultivo: plantar en farmland, 4 etapas, bonemeal funciona, drop 1-3.
 - [ ] Yuyo gatero en león (salvaje y manso): rueda panza arriba, círculos, saltitos, corazones + partículas verdes, ~45 s; salvaje no ataca durante el viaje; montado te baja.
-- [ ] Yuyo dopante: partículas de poción; montado se siente más rápido; advancement "Doping" solo si estás montado.
+- [ ] Yuyo dopante: da Velocidad II + Fuerza I + Regeneración I (verificar los tres, no solo velocidad); montado se siente más rápido; los tres efectos expiran juntos a los ~2 min; advancement "Doping" solo si estás montado.
 - [ ] Advancement "Mal viaje" con el primer yuyo gatero.
 
 ## Nuevo en v0.3.0 — Gráficos

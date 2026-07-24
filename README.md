@@ -8,7 +8,7 @@ Agrega leones a las sabanas: cazan de noche, descansan de día, y se pueden dome
 
 ### Los leones
 - **Spawn natural** en sabanas, en manadas de 2–4 con variantes mezcladas, más **guaridas** generadas (roca con huesos y su manada, ~1 cada 40 chunks).
-- **León negro**: variante rara (3 % de los machos salvajes), con melena igual que el macho normal; se puede heredar al criar.
+- **León negro**: variante rara (3 % de los leones salvajes), con melena igual que el macho normal; se puede heredar al criar.
 - **Día/noche**: de día los salvajes descansan echados y no molestan; de noche cazan vacas, ovejas, cerdos, gallinas, conejos… y jugadores.
 - **Rugido**: el macho ruge al anochecer y al entrar en combate — las presas cercanas huyen en pánico. El león negro, al rugir, reproduce uno de dos audios propios elegido al azar (subtítulo "Un león negro opina").
 - **Acecho**: se agachan al fijar una presa lejana antes de correr a atacarla.
@@ -30,7 +30,7 @@ Agrega leones a las sabanas: cazan de noche, descansan de día, y se pueden dome
 - **Guaridas**: nacen ya rodeadas de yuyos silvestres maduros, mezcla de gatero y dopante.
 - **Cultivo**: se plantan en farmland, crecen en 4 etapas (bonemeal acelera) y al cosechar dropean 1–3.
 - **Yuyo gatero**: dárselo a un león (salvaje o manso) lo manda de viaje ~45 s — rueda panza arriba, hace círculos, saltitos y tira corazones con partículas verdes; el salvaje no ataca mientras dura, y si estaba montado te baja.
-- **Yuyo dopante**: partículas de poción; montado, el león se siente notablemente más rápido.
+- **Yuyo dopante**: le da al león Velocidad II, Fuerza I y Regeneración I por 2 minutos (con partículas de poción); montado, se nota en la velocidad y el aguante.
 
 ### Loot y crafteos
 - Los leones salvajes dropean **pelaje** (blanco si el león es blanco), **carne**, y a veces un **colmillo** (solo adultos salvajes).
